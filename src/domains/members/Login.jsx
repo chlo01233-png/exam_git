@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from "./Login.module.css";
+import { signin } from './membersApi';
+import useAuthStore from '../../store/authStore';
 
 const Login = () => {
+
+    const [user,setUser] = useState({id :"",pw:""});
+    const login = useAuthStore(state => state.login)
+
+    const handleChange = (e) => {
+        const {name,value} = e.target
+        setUser(prev => ({...prev,[name]:value}));
+       
+    }
+
+    const handleLogin = () => {
+        signin(user).then(resp => {
+            login(resp.data)
+        })
+    } 
+
     return (
         <div className={styles.container}>
             <div className={styles.loginCard}>
@@ -13,12 +31,14 @@ const Login = () => {
 
                 <div className={styles.form}>
                     <div className={styles.inputField}>
-                        <label className={styles.label}>이메일 주소</label>
+                        <label className={styles.label}>아이디</label>
                         <input 
-                            type="email" 
+                            type="text" 
                             className={styles.input} 
-                            placeholder="example@email.com" 
+                            placeholder="아이디를 입력해주세요." 
                             required 
+                            name='id'
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -29,16 +49,18 @@ const Login = () => {
                             className={styles.input} 
                             placeholder="비밀번호를 입력하세요" 
                             required 
+                            name='pw'
+                            onChange={handleChange}
                         />
                     </div>
 
-                    <button type="button" className={styles.loginButton}>
+                    <button type="button" className={styles.loginButton} onClick={handleLogin}>
                         로그인
                     </button>
                 </div>
 
                 <div className={styles.actions}>
-                    <Link to="/forgot" className={styles.link}>비밀번호를 잊으셨나요?</Link>
+                    {/* <Link to="/forgot" className={styles.link}>비밀번호를 잊으셨나요?</Link> */}
                     <span>
                         처음이신가요? <Link to="/signup" className={styles.link}>회원가입</Link>
                     </span>
