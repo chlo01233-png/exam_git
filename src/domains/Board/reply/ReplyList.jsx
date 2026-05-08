@@ -3,7 +3,6 @@ import Reply from './Reply';
 import styles from './ReplyList.module.css';
 
 const ReplyList = () => {
-  // useState를 사용하여 댓글 목록 데이터를 상태로 관리
   const [replies, setReplies] = useState([
     {
       seq: 1,
@@ -25,7 +24,8 @@ const ReplyList = () => {
     }
   ]);
 
-  // 댓글 삭제 핸들러 (상태 업데이트 예시)
+  const [newComment, setNewComment] = useState('');
+
   const handleDelete = (seq) => {
     if (window.confirm('댓글을 삭제하시겠습니까?')) {
       setReplies(replies.filter(reply => reply.seq !== seq));
@@ -34,12 +34,33 @@ const ReplyList = () => {
 
   return (
     <div className={styles.listContainer}>
-      {/* 댓글 헤더: 총 댓글 수 표시 */}
-      <h3 className={styles.title}>
-        댓글 <span className={styles.count}>{replies.length}개</span>
-      </h3>
+      {/* 제목 및 총 개수 */}
+      <div className={styles.titleSection}>
+        <h3 className={styles.title}>댓글</h3>
+        <span className={styles.count}>{replies.length}개</span>
+      </div>
 
-      {/* 댓글 목록 렌더링 */}
+      {/* 댓글 입력창 (진짜 사이트처럼 구성) */}
+      <div className={styles.inputSection}>
+        <div className={styles.inputAvatar}>M</div>
+        <div className={styles.inputWrapper}>
+          <input 
+            type="text" 
+            className={styles.commentInput} 
+            placeholder="댓글 추가..." 
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          {newComment && (
+            <div className={styles.inputActions}>
+              <button className={styles.cancelBtn} onClick={() => setNewComment('')}>취소</button>
+              <button className={`${styles.submitBtn} ${styles.active}`}>댓글</button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 댓글 목록 */}
       <div className={styles.listWrapper}>
         {replies.map((reply) => (
           <Reply

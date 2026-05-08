@@ -16,7 +16,7 @@ const Reply = ({ writer, contents, write_date, onDelete }) => {
 
         <div className={styles.actions}>
           <button className={styles.actionBtn}>좋아요</button>
-          <button className={styles.actionBtn}>답글</button>
+          {/* <button className={styles.actionBtn}>답글</button> */}
           {onDelete && (
             <button 
               className={`${styles.actionBtn} ${styles.deleteBtn}`}
