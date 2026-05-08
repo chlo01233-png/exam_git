@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './List.module.css';
+import { maxios } from '../../api/axiosApi';
 
 const List = () => {
-  // Dummy data for the board list
-  const posts = [
-    { id: 1, title: '첫 번째 게시글입니다.', author: 'User1', date: '2026-05-08', views: 123 },
-    { id: 2, title: '두 번째 게시글입니다.', author: 'User2', date: '2026-05-07', views: 45 },
-    { id: 3, title: '세 번째 게시글입니다.', author: 'User3', date: '2026-05-06', views: 88 },
-    { id: 4, title: '네 번째 게시글입니다.', author: 'User4', date: '2026-05-05', views: 201 },
-  ];
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await maxios.get('/board/list'); // API endpoint for board list
+        setPosts(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  if (loading) {
+    return <div className={styles.boardContainer}>Loading posts...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.boardContainer}>Error: {error.message}</div>;
+  }
 
   return (
     <div className={styles.boardContainer}>
@@ -25,19 +46,30 @@ const List = () => {
             </tr>
           </thead>
           <tbody>
-            {posts.map((post) => (
-              <tr key={post.id}>
-                <td>{post.id}</td>
-                <td><a href={`/board/${post.id}`} className={styles.postLink}>{post.title}</a></td>
-                <td>{post.author}</td>
-                <td>{post.date}</td>
-                <td>{post.views}</td>
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <tr key={post.seq}>
+                  <td>{post.seq}</td>
+                  <td>
+                    <Link to={`/board/${post.seq}`} className={styles.postLink}>
+                      {post.title}
+                    </Link>
+                  </td>
+                  <td>{post.writer}</td>
+                  <td>{post.write_date}</td>
+                  <td>{post.view_count}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">게시글이 없습니다.</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
       <div className={styles.pagination}>
+        {/* Pagination will be implemented later if needed */}
         <button className={styles.pageButton}>&laquo;</button>
         <button className={styles.pageButton}>&lsaquo;</button>
         <button className={`${styles.pageButton} ${styles.active}`}>1</button>
