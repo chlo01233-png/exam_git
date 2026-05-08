@@ -4,6 +4,7 @@ export const maxios = axios.create({
     baseURL : `http://localhost`
 });
 
+
 maxios.interceptors.request.use((config) => {
     const token = sessionStorage.getItem("token")
     if(token){
@@ -11,3 +12,4 @@ maxios.interceptors.request.use((config) => {
     }
     return config;
 });
+

@@ -6,6 +6,7 @@ import useAuthStore from '../../store/authStore';
 const Main = () => {
     const navigate = useNavigate();
     const logout = useAuthStore(state => state.logout)
+    const loginId = useAuthStore(state => state.loginId)
 
     const handleLogout = () => {
         if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -30,7 +31,7 @@ const Main = () => {
             <div className={styles.mainCard}>
                 <header className={styles.header}>
                     <h1 className={styles.title}>Welcome Back!</h1>
-                    <p className={styles.subtitle}>님, 환영합니다. 무엇을 도와드릴까요?</p>
+                    <p className={styles.subtitle}>{loginId}님, 환영합니다. 무엇을 도와드릴까요?</p>
                 </header>
 
                 <div className={styles.menuGrid}>

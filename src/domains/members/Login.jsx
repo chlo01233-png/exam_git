@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "./Login.module.css";
 import { signin } from './membersApi';
 import useAuthStore from '../../store/authStore';
@@ -8,7 +8,7 @@ const Login = () => {
 
     const [user,setUser] = useState({id :"",pw:""});
     const login = useAuthStore(state => state.login)
-
+    const navi = useNavigate();
     const handleChange = (e) => {
         const {name,value} = e.target
         setUser(prev => ({...prev,[name]:value}));
@@ -18,6 +18,7 @@ const Login = () => {
     const handleLogin = () => {
         signin(user).then(resp => {
             login(resp.data)
+            navi(`/`);
         })
     } 
 

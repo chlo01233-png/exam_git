@@ -1,0 +1,5 @@
+import { maxios } from './axiosApi';
+
+export const getBoardList = () => maxios.get('/board/list');
+
+// export const getBoardDetail = (seq) => maxios.get(`/board/${seq}`);
