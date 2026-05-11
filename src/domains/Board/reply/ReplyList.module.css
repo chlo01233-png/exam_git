@@ -1,0 +1,107 @@
+.listContainer {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f0f0f;
+  margin: 0;
+}
+
+.count {
+  color: #606060;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+/* 댓글 입력 영역 */
+.inputSection {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.inputAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #065fd4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.inputWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.commentInput {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 4px 0;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: transparent;
+}
+
+.commentInput:focus {
+  border-bottom: 2px solid #0f0f0f;
+}
+
+.inputActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cancelBtn, .submitBtn {
+  padding: 8px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.cancelBtn {
+  background: none;
+  color: #0f0f0f;
+}
+
+.cancelBtn:hover {
+  background-color: #e5e5e5;
+}
+
+.submitBtn {
+  background-color: #f2f2f2;
+  color: #909090;
+}
+
+.submitBtn.active {
+  background-color: #065fd4;
+  color: white;
+}
+
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+}

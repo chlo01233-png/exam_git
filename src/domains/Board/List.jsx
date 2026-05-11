@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import styles from './List.module.css';
@@ -23,6 +24,7 @@ const List = () => {
         const response = await getBoardList(currentPage); // API endpoint for board list
         setPosts(response.data.list);
 
+
         setTotalCount(response.data.totalCount);
         setTotalPages(Math.ceil(response.data.totalCount / 10));
       } catch (err) {
@@ -34,6 +36,7 @@ const List = () => {
 
     fetchPosts();
   }, [currentPage]);
+
 
   if (loading) {
     return <div className={styles.boardContainer}>Loading posts...</div>;
@@ -97,5 +100,6 @@ const List = () => {
     </div>
   );
 };
+
 
 export default List;
