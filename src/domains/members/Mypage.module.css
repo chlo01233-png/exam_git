@@ -70,6 +70,56 @@
     flex: 1;
 }
 
+/* Edit Mode Styles */
+.editInput {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: left;
+}
+
+.editInput:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.addressGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.zipcodeRow {
+    display: flex;
+    gap: 8px;
+}
+
+.smallSearchButton {
+    padding: 0 15px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.smallSearchButton:hover {
+    background: #5a6268;
+}
+
+.readOnlyInput {
+    background-color: #f8f9fa;
+    cursor: default;
+}
+
 .buttonGroup {
     display: flex;
     gap: 10px;
