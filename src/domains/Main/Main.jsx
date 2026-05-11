@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Main.module.css';
 import useAuthStore from '../../store/authStore';
+import { deleteMember } from '../members/membersApi';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -19,10 +20,16 @@ const Main = () => {
 
     const handleWithdrawal = () => {
         if (window.confirm("정말로 탈퇴하시겠습니까? 탈퇴 후 데이터 복구는 불가능합니다.")) {
-            // 회원탈퇴 로직 호출
-            console.log("회원탈퇴 진행");
-            alert("탈퇴 처리가 완료되었습니다.");
-            navigate('/');
+            deleteMember(loginId).then(resp => {
+                if(resp.data) {
+                    alert("탈퇴 처리가 완료되었습니다.");
+                    logout();
+                    navigate('/');
+                }
+            }).catch(error => {
+                console.error("회원탈퇴 실패:", error);
+                alert("탈퇴 처리 중 오류가 발생했습니다.");
+            });
         }
     };
 

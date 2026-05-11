@@ -24,6 +24,26 @@
   margin-bottom: 20px;
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.writeButton {
+  background-color: dodgerblue;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.writeButton:hover {
+  background-color: #1a75ce;
+}
+
 .boardTable {
   width: 100%;
   border-collapse: collapse;

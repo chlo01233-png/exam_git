@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './Detail.module.css';
-import { maxios } from '../../api/axiosApi';
+import { getBoardDetail } from '../../api/boardApi';
+
 
 
 const Detail = () => {
@@ -14,9 +15,9 @@ const Detail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPostDetail = () => {
+    const fetchPostDetail = async () => {
       try {
-        const response = maxios.get(`/board/${seq}`); // Use the imported API function
+        const response =  await getBoardDetail(seq); // Use the imported API function
         setPost(response.data);
       } catch (err) {
         setError(err);

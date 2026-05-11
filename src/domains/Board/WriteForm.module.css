@@ -1,0 +1,92 @@
+.writeFormContainer {
+  width: 90%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.writeFormTitle {
+  font-size: 2em;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 3px solid dodgerblue;
+  padding-bottom: 15px;
+  display: inline-block;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555555;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; /* Ensures padding doesn't increase width */
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  border-color: dodgerblue;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.submitButton,
+.cancelButton {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-weight: bold;
+}
+
+.submitButton {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.submitButton:hover {
+  background-color: #1a75ce;
+  transform: translateY(-1px);
+}
+
+.cancelButton {
+  background-color: #f0f0f0;
+  color: #555555;
+  border: 1px solid #cccccc;
+}
+
+.cancelButton:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-1px);
+}

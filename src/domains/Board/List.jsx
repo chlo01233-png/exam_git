@@ -1,97 +1,97 @@
-// import { useEffect, useState } from 'react';
-// import styles from './Board.module.css';
-// import { getBoardList } from '../../api/signupFormApi';
-// import useLoadingStore from '../../store/loadingStore';
-// import BarLoader from 'react-spinners/BarLoader';
-// import { Link, useSearchParams } from "react-router-dom";
+// import React, { useEffect, useState } from 'react';
+// import { Link, useSearchParams } from 'react-router-dom';
+// import styles from './List.module.css'; // 파일명이 List.module.css인지 확인 필수!
 // import Pagination from '@mui/material/Pagination';
+// import { getBoardList } from '../../api/boardApi'; // boardApi 경로 확인
 
 // const List = () => {
-//   const loading = useLoadingStore(state => state.loading);
-//     const setLoading = useLoadingStore(state => state.setLoading);
+//   const [posts, setPosts] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
 
-//     const [ searchParam, setSearchParam ] = useSearchParams();
+//   const [searchParam, setSearchParam] = useSearchParams();
+//   const currentPage = parseInt(searchParam.get("cpage")) || 1;
 
-//     const currentPage = parseInt(searchParam.get("cpage")) || 1;
+//   const [totalCount, setTotalCount] = useState("");
+//   const [totalPages, setTotalPages] = useState(1);
 
+//   useEffect(() => {
+//     const fetchPosts = async () => {
+//       try {
+//         const response = await getBoardList(currentPage); 
+//         setPosts(response.data.list);
+//         setTotalCount(response.data.totalCount);
+//         setTotalPages(Math.ceil(response.data.totalCount / 10));
+//       } catch (err) {
+//         setError(err);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchPosts();
+//   }, [currentPage]);
 
-//     const [messages, setMessages] = useState([{
-//         seq: "",
-//         writer: "",
-//         title: "",
-//         content: "",
-//         view_count: "",
-//         write_date: ""
-//     }]);
+//   if (loading) {
+//     return <div className={styles.boardContainer}>Loading posts...</div>;
+//   }
 
-//     const [totalCount, setTotalCount] = useState();
-//     const [totalPages, setTotalPages] = useState();
-//     // const [currentPage, setCurrentPage] = useState(1);
+//   if (error) {
+//     return <div className={styles.boardContainer}>Error: {error.message}</div>;
+//   }
 
-
-
-//     useEffect(() => {
-//         setLoading(true);
-//         getBoardList(currentPage).then(resp => {
-//             setMessages(resp.data.list);
-
-//             setTotalCount(resp.data.totalCount);
-//             setTotalPages(Math.ceil(resp.data.totalCount / 10));
-
-//             setLoading(false);
-
-//             console.log(resp.data.list);
-//         })
-//     }, [currentPage])
-
-//     return (
-
-//         <>
-//             {loading && <div className={styles.loadingOverlay}>
-//                 <BarLoader size={300} color="#ffde4a" speedMultiplier={1.5}></BarLoader>
-//                 <p className={styles.loadingText}>데이터를 로딩 중입니다...</p>
-//             </div>
-//             }
-//             <div className={styles.container}>
-//                 <div className={styles.pageTitle}>회원게시판</div>
-//                 <div className={styles.btns}>
-//                     <Link to="/board/writeform"><button>글작성</button></Link>
-//                     <Link to="/"><button>홈으로</button></Link>
-//                 </div>
-//                 <div className={styles.body}>
-//                     <div className={styles.row}>
-//                         <div className={styles.seq}>번호</div>
-//                         <div className={styles.title}>제목</div>
-//                         <div className={styles.writer}>작성자</div>
-//                         <div className={styles.write_date}>작성일</div>
-//                     </div>
-//                     {messages.map((message, index) => {
-//                         return (
-//                             < div className={styles.row} key={index}>
-//                                 <div className={styles.seq}>{message.seq}</div>
-//                                 <div className={styles.title}><Link to={`/board/${message.seq}`}>{message.title}</Link></div>
-//                                 <div className={styles.writer}>{message.writer}</div>
-//                                 <div className={styles.write_date}>{message.write_date}</div>
-//                             </div>
-
-//                         );
-//                     })
-
-//                     }
-
-//                     <div className={styles.footer}>
-//                         <Pagination
-//                             count={totalPages}
-//                             page={currentPage}
-//                             onChange={(e, page) => { setSearchParam({ cpage: page }) }}
-//                             siblingCount={4}
-//                             boundaryCount={0} />
-//                     </div>
-//                 </div>
-
-//             </div >
-//         </>
-//     );
+//   return (
+//     <div className={styles.boardContainer}>
+//       <h1 className={styles.boardTitle}>게시판</h1>
+//       <div className={styles.tableWrapper}>
+//         <table className={styles.boardTable}>
+//           <thead>
+//             <tr>
+//               <th>번호</th>
+//               <th>제목</th>
+//               <th>작성자</th>
+//               <th>작성일</th>
+//               <th>조회수</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {posts.length > 0 ? (
+//               posts.map((post) => (
+//                 <tr key={post.seq}>
+//                   <td>{post.seq}</td>
+//                   <td>
+//                     <Link to={`/board/${post.seq}`} className={styles.postLink}>
+//                       {post.title}
+//                     </Link>
+//                   </td>
+//                   <td>{post.writer}</td>
+//                   <td>{post.write_date}</td>
+//                   <td>{post.view_count}</td>
+//                 </tr>
+//               ))
+//             ) : (
+//               <tr>
+//                 <td colSpan="5">게시글이 없습니다.</td>
+//               </tr>
+//             )}
+//           </tbody>
+//         </table>
+//       </div>
+//       <div className={styles.buttonContainer}>
+//         <Link to="/board/write" className={styles.writeButton}>글쓰기</Link>
+//       </div>
+//       <div className={styles.pagination}>
+//         <div className={styles.footer}>
+//           <Pagination
+//             count={totalPages}
+//             page={currentPage}
+//             onChange={(e, page) => { setSearchParam({ cpage: page }) }}
+//             siblingCount={4}
+//             boundaryCount={0} 
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
 // };
 
 // export default List;
