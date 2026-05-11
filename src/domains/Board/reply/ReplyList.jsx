@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Reply from './Reply';
 import styles from './ReplyList.module.css';
-import { getReplies, deleteReply } from '../../../api/reply/replyApi';
+import { getReplies, deleteReply, postReply } from '../../../api/reply/replyApi';
+import useAuthStore from '../../../store/authStore';
 
 const ReplyList = ({ parent_seq = 7 }) => {
-  // 상태 변수: 댓글 목록, 입력창 텍스트, 데이터 갱신용 트리거
+  // 상태 변수 및 스토어 데이터
+  const { loginId } = useAuthStore();
   const [replies, setReplies] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [refresh, setRefresh] = useState(false);
@@ -13,6 +15,23 @@ const ReplyList = ({ parent_seq = 7 }) => {
   useEffect(() => {
     getReplies(parent_seq).then(res => setReplies(res.data));
   }, [parent_seq, refresh]);
+
+  // 댓글 등록: 로그인 아이디가 있을 때만 실행
+  const handleSubmit = () => {
+    if (!loginId) return alert('로그인이 필요합니다.');
+    if (!newComment.trim()) return alert('내용을 입력해주세요.');
+
+    const data = {
+      parent_seq: parent_seq,
+      writer: loginId,
+      contents: newComment
+    };
+
+    postReply(data).then(() => {
+      setNewComment(''); // 입력창 초기화
+      setRefresh(!refresh); // 목록 갱신 트리거
+    }).catch(err => alert('등록 실패'));
+  };
 
   // 댓글 삭제: API 호출 성공 후 refresh 상태를 반전시켜 목록 재조회
   const handleDelete = (seq) => {
@@ -31,35 +50,43 @@ const ReplyList = ({ parent_seq = 7 }) => {
 
       {/* 댓글 작성 입력 영역 */}
       <div className={styles.inputSection}>
-        <div className={styles.inputAvatar}>M</div>
+        <div className={styles.inputAvatar}>{loginId ? loginId[0].toUpperCase() : 'G'}</div>
         <div className={styles.inputWrapper}>
           <input 
             type="text" 
             className={styles.commentInput} 
-            placeholder="댓글 추가..." 
+            placeholder={loginId ? "댓글 추가..." : "로그인 후 댓글을 작성할 수 있습니다."} 
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
+            disabled={!loginId}
           />
-          {/* 입력 내용이 있을 때만 취소/등록 버튼 표시 */}
           {newComment && (
             <div className={styles.inputActions}>
               <button className={styles.cancelBtn} onClick={() => setNewComment('')}>취소</button>
-              <button className={`${styles.submitBtn} ${styles.active}`}>댓글</button>
+              <button 
+                className={`${styles.submitBtn} ${styles.active}`}
+                onClick={handleSubmit}
+              >
+                댓글
+              </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* 댓글 목록 출력 영역: 삼항 연산자로 데이터 유무에 따른 화면 분기 */}
+      {/* 댓글 목록 출력 영역 */}
       <div className={styles.listWrapper}>
         {replies && replies.length > 0 ? (
           replies.map((reply) => (
             <Reply
               key={reply.seq}
+              seq={reply.seq}
+              loginId={loginId}
               writer={reply.writer}
               contents={reply.contents}
               write_date={reply.write_date}
               onDelete={() => handleDelete(reply.seq)}
+              onUpdate={() => setRefresh(!refresh)}
             />
           ))
         ) : (
@@ -69,4 +96,5 @@ const ReplyList = ({ parent_seq = 7 }) => {
     </div>
   );
 };
+
 export default ReplyList;
