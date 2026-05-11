@@ -44,6 +44,21 @@
   background-color: #1a75ce;
 }
 
+.mainButton {
+  background-color: #6c757d; /* A neutral gray, similar to backButton */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  margin-right: 10px; /* Space between mainButton and writeButton */
+}
+
+.mainButton:hover {
+  background-color: #5a6268;
+}
+
 .boardTable {
   width: 100%;
   border-collapse: collapse;

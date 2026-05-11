@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './Detail.module.css';
-import { getBoardDetail } from '../../api/boardApi';
+import { getBoardDetail, deleteBoardPost } from '../../api/boardApi'; // Import deleteBoardPost
+import useAuthStore from '../../store/authStore'; // Import useAuthStore
+import ReplyList from './reply/ReplyList'; // Import ReplyList
 
 
 
@@ -13,6 +15,7 @@ const Detail = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { loginId } = useAuthStore(); // Get loginId from auth store
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -28,6 +31,23 @@ const Detail = () => {
 
     fetchPostDetail();
   }, [seq]);
+
+  const handleEdit = () => {
+    navigate(`/board/edit/${post.seq}`);
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+      try {
+        await deleteBoardPost(post.seq); // Call delete API
+        alert("게시글이 삭제되었습니다.");
+        navigate('/board/list'); // Redirect to board list
+      } catch (err) {
+        alert("게시글 삭제에 실패했습니다: " + err.message);
+        console.error("Delete error:", err);
+      }
+    }
+  };
 
   if (loading) {
     return <div className={styles.detailContainer}>Loading post details...</div>;
@@ -54,8 +74,14 @@ const Detail = () => {
       </div>
       <div className={styles.detailActions}>
         <button className={styles.backButton} onClick={() => navigate(-1)}>목록으로</button>
-        {/* Add Edit/Delete buttons here if needed */}
+        {loginId === post.writer && (
+          <>
+            <button className={styles.editButton} onClick={handleEdit}>수정</button>
+            <button className={styles.deleteButton} onClick={handleDelete}>삭제</button>
+          </>
+        )}
       </div>
+      <ReplyList boardSeq={seq} /> {/* Render ReplyList and pass boardSeq prop */}
     </div>
   );
 };

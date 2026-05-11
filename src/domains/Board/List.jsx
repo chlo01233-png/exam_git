@@ -84,6 +84,7 @@ const List = () => {
         </table>
       </div>
       <div className={styles.buttonContainer}>
+        <Link to="/main" className={styles.mainButton}>메인으로</Link>
         <Link to="/board/write" className={styles.writeButton}>글쓰기</Link>
       </div>
       <div className={styles.pagination}>

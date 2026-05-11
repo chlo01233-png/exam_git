@@ -1,8 +1,8 @@
 .listContainer {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 0 16px;
+  /* Removed max-width and margin: auto to allow it to expand within Detail.jsx */
+  padding: 0 16px; /* Keep internal padding */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin-top: 30px; /* Add some top margin to separate from post actions */
 }
 
 .titleSection {

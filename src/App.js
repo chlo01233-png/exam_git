@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import List from './domains/board/List';
 import WriteForm from './domains/board/WriteForm'; // Import WriteForm
+import EditForm from './domains/board/EditForm'; // Import EditForm
 import './App.css'; // Keep the App.css import if there are global styles
 import Login from './domains/members/Login';
 import Reply from './domains/board/reply/Reply';
@@ -36,6 +37,7 @@ function App() {
                     <Route path="list" element={<List />} />
                     <Route path=":seq" element={<Detail />} /> {/* New route for board detail */}
                     <Route path="write" element={<WriteForm />} /> {/* New route for writing */}
+                    <Route path="edit/:seq" element={<EditForm />} /> {/* New route for editing */}
                     <Route path='reply' element={<ReplyList />} />
                 </Route>
 
