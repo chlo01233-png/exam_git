@@ -12,7 +12,8 @@ import Login from './domains/members/Login';
 import Signup from './domains/members/Signup';
 import Main from './domains/Main/Main';
 import useAuthStore from './store/authStore';
-import Detail from "./domains/Board/Detail"
+import Detail from "./domains/Board/Detail";
+import Mypage from './domains/members/Mypage';
 
 
 function App() {
@@ -31,10 +32,13 @@ function App() {
                 } />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/main" element={<Main />} />
+
                 <Route path="/board">
                     <Route path="list" element={<List />} />
                     <Route path=":seq" element={<Detail />} /> {/* New route for board detail */}
                 </Route>
+
+                <Route path='/mypage' element={<Mypage />} />
 
 
             </Routes>
